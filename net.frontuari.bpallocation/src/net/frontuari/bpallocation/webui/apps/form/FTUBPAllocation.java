@@ -95,7 +95,7 @@ public class FTUBPAllocation extends FTUForm {
 			return;
 
 		//	Async BPartner Test
-		Integer key = new Integer(m_C_BPartner_ID);
+		Integer key = m_C_BPartner_ID;
 		if (!m_bpartnerCheck.contains(key))
 		{
 			new Thread()
@@ -123,7 +123,7 @@ public class FTUBPAllocation extends FTUForm {
 			return;
 
 		//	Async BPartner Test
-		Integer key = new Integer(m_C_BPartner2_ID);
+		Integer key = m_C_BPartner2_ID;
 		if (!m_bpartnerCheck.contains(key))
 		{
 			new Thread()
@@ -185,7 +185,7 @@ public class FTUBPAllocation extends FTUForm {
 			while (rs.next())
 			{
 				Vector<Object> line = new Vector<Object>();
-				line.add(new Boolean(false));       //  0-Selection
+				line.add(false);       //  0-Selection
 				line.add(rs.getTimestamp(1));       //  1-TrxDate
 				KeyNamePair pp = new KeyNamePair(rs.getInt(3), rs.getString(2));
 				line.add(pp);                       //  2-DocumentNo
@@ -325,7 +325,7 @@ public class FTUBPAllocation extends FTUForm {
 			while (rs.next())
 			{
 				Vector<Object> line = new Vector<Object>();
-				line.add(new Boolean(false));       //  0-Selection
+				line.add(false);       //  0-Selection
 				line.add(rs.getTimestamp(1));       //  1-TrxDate
 				KeyNamePair pp = new KeyNamePair(rs.getInt(3), rs.getString(2));
 				line.add(pp);                       //  2-Value
@@ -637,7 +637,7 @@ public class FTUBPAllocation extends FTUForm {
 	/**************************************************************************
 	 *  Save Data
 	 */
-	public MAllocationHdr saveData(int m_WindowNo, Object date, IMiniTable payment, IMiniTable invoice, String trxName)
+	public MAllocationHdr saveData(int m_WindowNo, Object date, IMiniTable payment, IMiniTable invoice, String trxName, boolean isMultiCurrency)
 	{
 		if (m_noInvoices + m_noPayments == 0)
 			return null;
@@ -673,7 +673,7 @@ public class FTUBPAllocation extends FTUForm {
 				KeyNamePair pp = (KeyNamePair)payment.getValueAt(i, 2);   //  Value
 				//  Payment variables
 				int C_Payment_ID = pp.getKey();
-				paymentList.add(new Integer(C_Payment_ID));
+				paymentList.add(C_Payment_ID);
 				//
 				BigDecimal PaymentAmt = (BigDecimal)payment.getValueAt(i, i_payment);  //  Applied Payment
 				amountList.add(PaymentAmt);
@@ -682,6 +682,9 @@ public class FTUBPAllocation extends FTUForm {
 				//
 				if (log.isLoggable(Level.FINE)) log.fine("C_Payment_ID=" + C_Payment_ID 
 					+ " - PaymentAmt=" + PaymentAmt); // + " * " + Multiplier + " = " + PaymentAmtAbs);
+				
+				if(isMultiCurrency)
+					DateTrx = (Timestamp) payment.getValueAt(i, 1);
 			}
 		}
 		if (log.isLoggable(Level.CONFIG)) log.config("Number of Payments=" + paymentList.size() + " - Total=" + paymentAppliedAmt);
