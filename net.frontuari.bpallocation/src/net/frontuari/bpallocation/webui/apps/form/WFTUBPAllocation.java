@@ -150,6 +150,8 @@ public class WFTUBPAllocation extends FTUBPAllocation implements ValueChangeList
 	private WTableDirEditor organizationPick;
 	
 	private Panel southPanel = new Panel();
+	
+	private Checkbox usePaymentDate = new Checkbox();
 
 	/**
 	 *  Static Init
@@ -192,6 +194,8 @@ public class WFTUBPAllocation extends FTUBPAllocation implements ValueChangeList
 		multiCurrency.addActionListener(this);
 		allocCurrencyLabel.setText(".");
 		
+		usePaymentDate.setText(Msg.getMsg(Env.getCtx(), "VS_UsePaymentDate"));
+		
 		organizationLabel.setText(Msg.translate(Env.getCtx(), "AD_Org_ID"));
 		
 		North north = new North();
@@ -229,7 +233,8 @@ public class WFTUBPAllocation extends FTUBPAllocation implements ValueChangeList
 		ZKUpdateUtil.setHflex(currencyPick.getComponent(), "true");
 		row.appendCellChild(currencyPick.getComponent(),1);		
 		currencyPick.showMenu();
-		row.appendCellChild(multiCurrency,1);		
+		row.appendCellChild(multiCurrency,1);	
+		row.appendCellChild(usePaymentDate,2);
 		row.appendCellChild(autoWriteOff,2);
 		row.appendCellChild(new Space(),1);		
 		
@@ -387,6 +392,7 @@ public class WFTUBPAllocation extends FTUBPAllocation implements ValueChangeList
 			DocTypePick.setValue(m_C_DocType_ID);
 			DocTypePick.addValueChangeListener(this);
 			
+		usePaymentDate.setVisible(false);
 	}   //  dynInit
 	
 	/**************************************************************************
@@ -400,6 +406,10 @@ public class WFTUBPAllocation extends FTUBPAllocation implements ValueChangeList
 		log.config("");
 		if (e.getTarget().equals(multiCurrency))
 		{
+			if(multiCurrency.isSelected())
+				usePaymentDate.setVisible(true);
+			else
+				usePaymentDate.setVisible(false);
 			loadBPartner();
 			loadBPartner2();
 		}
@@ -675,7 +685,7 @@ public class WFTUBPAllocation extends FTUBPAllocation implements ValueChangeList
 				public void run(String trxName)
 				{
 					statusBar.getChildren().clear();
-					allocation[0] = saveData(form.getWindowNo(), dateField.getValue(), paymentTable, invoiceTable, trxName, multiCurrency.isSelected());
+					allocation[0] = saveData(form.getWindowNo(), dateField.getValue(), paymentTable, invoiceTable, trxName, usePaymentDate.isSelected());
 					
 				}
 			});

@@ -1,5 +1,6 @@
 package net.frontuari.bpallocation.webui.apps.form;
 
+import dev.vsuarez.allocation.model.VS_MAllocationHdr;
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -637,7 +638,7 @@ public class FTUBPAllocation extends FTUForm {
 	/**************************************************************************
 	 *  Save Data
 	 */
-	public MAllocationHdr saveData(int m_WindowNo, Object date, IMiniTable payment, IMiniTable invoice, String trxName, boolean isMultiCurrency)
+	public MAllocationHdr saveData(int m_WindowNo, Object date, IMiniTable payment, IMiniTable invoice, String trxName, boolean isUsePaymentDate)
 	{
 		if (m_noInvoices + m_noPayments == 0)
 			return null;
@@ -683,7 +684,7 @@ public class FTUBPAllocation extends FTUForm {
 				if (log.isLoggable(Level.FINE)) log.fine("C_Payment_ID=" + C_Payment_ID 
 					+ " - PaymentAmt=" + PaymentAmt); // + " * " + Multiplier + " = " + PaymentAmtAbs);
 				
-				if(isMultiCurrency)
+				if(isUsePaymentDate)
 					DateTrx = (Timestamp) payment.getValueAt(i, 1);
 			}
 		}
@@ -693,7 +694,7 @@ public class FTUBPAllocation extends FTUForm {
 		int iRows = invoice.getRowCount();
 		
 		//	Create Allocation
-		MAllocationHdr alloc = new MAllocationHdr (Env.getCtx(), true,	//	manual
+		VS_MAllocationHdr alloc = new VS_MAllocationHdr (Env.getCtx(), true,	//	manual
 			DateTrx, C_Currency_ID, Env.getContext(Env.getCtx(), "#AD_User_Name"), trxName);
 		alloc.setAD_Org_ID(AD_Org_ID);
 		alloc.setC_DocType_ID(m_C_DocType_ID);
@@ -817,7 +818,7 @@ public class FTUBPAllocation extends FTUForm {
 		if (alloc.get_ID() != 0)
 		{
 			if (!alloc.processIt(DocAction.ACTION_Complete))
-				throw new AdempiereException("Cannot complete allocation: " + alloc.getProcessMsg());
+				throw new AdempiereException(Msg.getMsg(alloc.getCtx(), "VS_CannotCompleteAllocation") + ": " + alloc.getProcessMsg());
 			alloc.saveEx();
 		}
 		

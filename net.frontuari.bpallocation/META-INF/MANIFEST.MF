@@ -19,7 +19,8 @@ Require-Bundle: org.apache.commons.lang3,
  zul,
  zweb,
  org.adempiere.ui;bundle-version="7.1.0"
-Import-Package: org.compiere.minigrid,
+Import-Package: dev.vsuarez.allocation.model,
+ org.compiere.minigrid,
  org.osgi.service.event
 Service-Component: OSGI-INF/ModelFactory.xml,
  OSGI-INF/EventFactory.xml,
