@@ -11,6 +11,7 @@ This plugins can allocate documents (Invoices and Payments) between two differen
 ## Contributors
 
 - Jorge Colmenarez - Frontuari, C.A. <jcolmenarez@frontuari.net>.
+- Ing. Victor Suarez <victor.suarez.is@gmail.com>
 
 ## Components
 
