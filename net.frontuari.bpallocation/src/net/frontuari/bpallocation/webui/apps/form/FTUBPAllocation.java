@@ -1,6 +1,5 @@
 package net.frontuari.bpallocation.webui.apps.form;
 
-import dev.vsuarez.allocation.model.VS_MAllocationHdr;
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,6 +31,7 @@ import org.compiere.util.TimeUtil;
 import org.compiere.util.Util;
 
 import net.frontuari.bpallocation.base.FTUForm;
+import net.frontuari.bpallocation.model.VS_MAllocationHdr;
 
 public class FTUBPAllocation extends FTUForm {
 
