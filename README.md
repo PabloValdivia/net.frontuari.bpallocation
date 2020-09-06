@@ -27,11 +27,17 @@ This plugins can allocate documents (Invoices and Payments) between two differen
 
 ## Features/Documentation
 
-- Put the plugin feature list here
+### Mejora en validacion de "Fecha erronea de Asignacion"
+- Se extiende Funcionalidad de Asignaciones de iDempiere, mejorando su funcionamiento, permitiendo mediante el configurador de sistema **VS_DaysDiffPermittedForAllocation**, establecer una cantidad de dias de holgura para que la asignacion no arroje error cuando es de fecha menor a los Documentos de Factura y/o Pagos de las lineas.
 
 ## Instructions
 
-- Put the instructions list to install here
+### Mejora en validacion de "Fecha erronea de Asignacion"
+- Instalar Plugin
+- Verificar si se instalo el configurador **VS_DaysDiffPermittedForAllocation**
+- Copiar dicho configurador a su Grupo Empresarial
+- Colocar el valor numerico deseado en el configurador **VS_DaysDiffPermittedForAllocation**, deben ser valores negativos, si queremos que la asignacion pueda tener fechas anteriores a los Documentos de Facturas y Pagos de la Asignacion.
+- Si el configurador no existe, el valor por defecto es 0, por lo que tomara el comportamiento original.
 
 ## Extra Links
 
