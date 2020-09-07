@@ -857,9 +857,11 @@ public class FTUBPAllocation extends FTUForm {
 		MBPartner bpartner = new MBPartner(Env.getCtx(), m_C_BPartner_ID, trxName);
 		bpartner.setTotalOpenBalance();
 		bpartner.saveEx();
-		MBPartner bpartner2 = new MBPartner(Env.getCtx(), m_C_BPartner2_ID, trxName);
-		bpartner2.setTotalOpenBalance();
-		bpartner2.saveEx();
+		if(m_C_BPartner2_ID > 0) {
+			MBPartner bpartner2 = new MBPartner(Env.getCtx(), m_C_BPartner2_ID, trxName);
+			bpartner2.setTotalOpenBalance();
+			bpartner2.saveEx();
+		}
 		paymentList.clear();
 		amountList.clear();
 		
